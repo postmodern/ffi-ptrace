@@ -4,7 +4,7 @@ require 'rubygems'
 require 'hoe'
 require './lib/ptrace/version.rb'
 
-Hoe.new('ptrace-ffi', FFI::PTrace::VERSION) do |p|
+Hoe.spec('ptrace-ffi') do |p|
   p.rubyforge_name = 'ptrace-ffi'
   p.developer('Postmodern','postmodern.mod3@gmail.com')
   p.remote_rdoc_dir = ''
