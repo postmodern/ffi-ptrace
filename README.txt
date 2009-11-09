@@ -1,6 +1,6 @@
 = ffi-ptrace
 
-* http://github.com/sophsec/ptrace-ffi/
+* http://github.com/sophsec/ffi-ptrace/
 * Postmodern (postmodern.mod3 at gmail.com)
 
 == DESCRIPTION:
