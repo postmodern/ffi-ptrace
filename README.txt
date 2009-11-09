@@ -1,4 +1,4 @@
-= ptrace-ffi
+= ffi-ptrace
 
 * http://github.com/sophsec/ptrace-ffi/
 * Postmodern (postmodern.mod3 at gmail.com)
@@ -13,7 +13,7 @@ Ruby FFI bindings for Linux ptrace.
 
 == INSTALL:
 
-  $ sudo gem install ptrace-ffi
+  $ sudo gem install ffi-ptrace
 
 == LICENSE:
 
