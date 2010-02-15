@@ -1,8 +1,0 @@
-History.txt
-Manifest.txt
-Rakefile
-README.txt
-lib/ptrace.rb
-lib/ptrace/typedefs.rb
-lib/ptrace/version.rb
-lib/ptrace/ffi.rb
