@@ -1,6 +1,6 @@
-require 'ffi'
+require 'ptrace/types'
 
-require 'ptrace/typedefs'
+require 'ffi'
 
 module FFI
   module PTrace
