@@ -34,7 +34,7 @@ module FFI
       :ptrace_setsiginfo
     ]
 
-    enum :ptrace_setoptions, [
+    enum :ptrace_options, [
       :ptrace_option_trace_sysgood, 1 << 0,
       :ptrace_option_trace_fork, 1 << 1,
       :ptrace_option_trace_vfork, 1 << 2,
