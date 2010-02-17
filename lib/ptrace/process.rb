@@ -1,3 +1,4 @@
+require 'ptrace/memory_space'
 require 'ptrace/user_regs'
 require 'ptrace/user_fpregs'
 require 'ptrace/ptrace'
@@ -6,6 +7,16 @@ require 'ptrace/ffi'
 module FFI
   module PTrace
     class Process
+
+      # The `text` memory space
+      attr_reader :text
+
+      # The `data` memory space
+      attr_reader :data
+
+      # The `user-land` arguments memory space.
+      attr_reader :user
+
       #
       # Creates a new Process with the given `pid`.
       #
@@ -14,6 +25,10 @@ module FFI
       #
       def initialize(pid)
         @pid = pid
+
+        @text = MemorySpace.new(self)
+        @data = MemorySpace.new(self)
+        @user = MemorySpace.new(self)
       end
 
       #
