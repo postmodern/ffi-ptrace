@@ -54,6 +54,8 @@ module FFI
       :ptrace_event_exit, 6
     ]
 
+    attach_function :ptrace, [:ptrace_request, :pid_t, :pointer, :pointer], :long
+
     # Operation not permitted
     EPERM = 1
 
@@ -63,7 +65,7 @@ module FFI
     # I/O error
     EIO = 5
 
-    attach_function :ptrace, [:ptrace_request, :pid_t, :pointer, :pointer], :long
+    attach_variable :errno, :int
 
   end
 end
