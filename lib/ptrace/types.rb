@@ -57,5 +57,15 @@ module FFI
         :ss
       ]
     end
+
+    # Operation not permitted
+    EPERM = 1
+
+    # No such process
+    ESRCH = 3
+
+    # I/O error
+    EIO = 5
+
   end
 end

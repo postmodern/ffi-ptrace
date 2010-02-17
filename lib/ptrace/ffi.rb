@@ -56,15 +56,6 @@ module FFI
 
     attach_function :ptrace, [:ptrace_request, :pid_t, :pointer, :pointer], :long
 
-    # Operation not permitted
-    EPERM = 1
-
-    # No such process
-    ESRCH = 3
-
-    # I/O error
-    EIO = 5
-
     attach_variable :errno, :int
 
   end
