@@ -7,7 +7,7 @@ module FFI
   module PTrace
     class UserFPRegs < FFI::Struct
 
-      if FFI::Type::ULONG.size == 8
+      if FFI::Platform::ADDRESS_SIZE == 64
         include UserFPRegs64
       else
         include UserFPRegs32

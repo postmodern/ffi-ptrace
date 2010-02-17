@@ -6,7 +6,7 @@ module FFI
 
     typedef :int, :pid_t
 
-    if Types::ULONG.size == 8
+    if FFI::Platform::ADDRESS_SIZE == 64
       REGS = enum [
         :r15,
         :r14,
