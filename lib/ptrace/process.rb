@@ -6,10 +6,28 @@ require 'ptrace/ffi'
 module FFI
   module PTrace
     class Process
+      #
+      # Creates a new Process with the given `pid`.
+      #
+      # @param [Integer] pid
+      #   The ID of the process.
+      #
       def initialize(pid)
         @pid = pid
       end
 
+      #
+      # Forks a new traceable process.
+      #
+      # @param [String] program
+      #   The program to run within the forked process.
+      #
+      # @param [Array] args
+      #   The arguments to run the program with.
+      #
+      # @return [Process]
+      #   The process object.
+      #
       def Process.fork(program,*args)
         ret = fork do
           PTrace.allow!
@@ -44,18 +62,33 @@ module FFI
         ptrace(:ptrace_pokeuser,offset,data)
       end
 
+      #
+      # Causes the process to continue executing.
+      #
       def continue!
         ptrace(:ptrace_cont)
       end
 
+      #
+      # Kills the process.
+      #
       def kill!
         ptrace(:ptrace_kill)
       end
 
+      #
+      # Causes the process to pause after every instruction.
+      #
       def single_step!
         ptrace(:ptrace_singlestep)
       end
 
+      #
+      # Reads the values within the registers.
+      #
+      # @return [UserRegs]
+      #   The current registers of the process.
+      #
       def regs
         regs = UserRegs.new
 
@@ -63,11 +96,26 @@ module FFI
         return regs
       end
 
+      #
+      # Writes values to the registers.
+      #
+      # @param [UserRegs] new_regs
+      #   The new register values to write.
+      #
+      # @return [UserRegs]
+      #   The written registers.
+      #
       def regs=(new_regs)
         ptrace(:ptrace_setregs,nil,new_regs)
         return new_regs
       end
 
+      #
+      # Reads the values within the floating-point registers.
+      #
+      # @return [UserFPRegs]
+      #   The current floating-point registers of the process.
+      #
       def fp_regs
         fp_regs = UserFPRegs.new
 
@@ -75,17 +123,32 @@ module FFI
         return fp_regs
       end
 
+      #
+      # Writes values to the floating-point registers.
+      #
+      # @param [UserFPRegs] new_fp_regs
+      #   The new floating-point register values to write.
+      #
+      # @return [UserFPRegs]
+      #   The written floating-point registers.
+      #
       def fp_regs=(new_fp_regs)
         ptrace(:ptrace_getfpregs,nil,new_fp_regs)
         return fp_regs
       end
 
+      #
+      # Attach to the process.
+      #
       def attach!
         ptrace(:ptrace_attach)
       end
 
-      def detach!(exit_code=0)
-        ptrace(:ptrace_detach,exit_code)
+      #
+      # Detaches from the process.
+      #
+      def detach!
+        ptrace(:ptrace_detach)
       end
 
       def fpx_regs
@@ -96,10 +159,19 @@ module FFI
         raise(RuntimeError,"#{self.class}#fpx_regs= not implemented",caller)
       end
 
+      #
+      # Causes the process to pause after every system call.
+      #
       def syscall_step!
         ptrace(:ptrace_syscall)
       end
 
+      #
+      # Sets the ptrace options.
+      #
+      # @param [Integer] new_options
+      #   The ptrace option flags.
+      #
       def options=(new_options)
         ptrace(:ptrace_setoptions,nil,new_options)
       end
@@ -118,12 +190,36 @@ module FFI
 
       protected
 
+      #
+      # Calls `ptrace` on the process.
+      #
+      # @param [Symbol] request
+      #   The requested `ptrace` function.
+      #
+      # @param [Integer] addr
+      #   The optional address.
+      #
+      # @param [FFI::MemoryPointer, Integer] data
+      #   The optional data.
+      #
+      # @return [Integer]
+      #   The return value from `ptrace`.
+      #
+      # @raise [Errno::EACCESS]
+      #   The process is not allowed to be traced.
+      #
+      # @raise [RuntimeError]
+      #   Either the process no longer exists or is already being traced.
+      #
+      # @raise [IOError]
+      #   The `ptrace` request was invalid or the memory address was invalid.
+      #
       def ptrace(request,addr=nil,data=nil)
         ret = PTrace.ptrace(request,@pid,addr,data)
 
         case PTrace.errno
         when PTrace::EPERM
-          raise(RuntimeError,"The requested process (#{@pid}) couldn't be traced. Permission denied",caller)
+          raise(Errno::EACCESS,"The requested process (#{@pid}) couldn't be traced. Permission denied",caller)
         when PTrace::ESRCH
           raise(RuntimeError,"The requested process (#{@pid}) doesn't exist or is being traced",caller)
         when PTrace::EIO
