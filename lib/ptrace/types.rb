@@ -4,9 +4,9 @@ module FFI
   module PTrace
     extend FFI::Library
 
-    typedef :int, :pid_t
+    WORD_SIZE = (FFI::Platform::ADDRESS_SIZE / 8)
 
-    if FFI::Platform::ADDRESS_SIZE == 64
+    if WORD_SIZE == 8
       REGS = enum [
         :r15,
         :r14,
@@ -66,6 +66,8 @@ module FFI
 
     # I/O error
     EIO = 5
+
+    typedef :int, :pid_t
 
   end
 end
