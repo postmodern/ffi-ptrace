@@ -11,6 +11,11 @@ Ruby FFI bindings for Linux ptrace.
 
 ## Examples
 
+## Requirements
+
+* Linux / libc.
+* [ffi](http://github.com/ffi/ffi) ~> 0.6.0
+
 ## Install
 
     $ sudo gem install ffi-ptrace
