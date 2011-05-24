@@ -7,7 +7,7 @@ authors: Postmodern
 has_rdoc: yard
 
 dependencies:
-  ffi: ~> 1.0
+  ffi: >= 0.6.0, <= 1.1.0
 
 development_dependencies:
   ore-tasks: ~> 0.4
