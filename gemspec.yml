@@ -6,6 +6,8 @@ homepage: http://github.com/sophsec/ffi-ptrace
 authors: Postmodern
 has_rdoc: yard
 
+requirements: libc
+
 dependencies:
   ffi: >= 0.6.0, <= 1.1.0
 
