@@ -1,7 +1,9 @@
 # ffi-ptrace
 
-* [github.com/sophsec/ffi-ptrace](http://github.com/sophsec/ffi-ptrace/)
-* Postmodern (postmodern.mod3 at gmail.com)
+* [Source](http://github.com/sophsec/ffi-ptrace)
+* [Issues](http://github.com/sophsec/ffi-ptrace/issues)
+* [Documentation](http://rubydoc.info/gems/ffi-ptrace/frames)
+* [Email](postmodern.mod3 at gmail.com)
 
 ## Description
 
@@ -14,13 +16,14 @@ Ruby FFI bindings for Linux ptrace.
 ## Requirements
 
 * Linux / libc.
-* [ffi](http://github.com/ffi/ffi) ~> 0.6.0
+* [ffi](http://github.com/ffi/ffi) ~> 1.0
 
 ## Install
 
-    $ sudo gem install ffi-ptrace
+    $ gem install ffi-ptrace
 
 ## License
 
-See {file:LICENSE.txt} for license information.
+Copyright (c) 2009-2011 Hal Brodigan
 
+See {file:LICENSE.txt} for license information.

@@ -1,37 +1,36 @@
 require 'rubygems'
-require 'bundler'
-
 require 'rake'
-require 'jeweler'
-require './lib/ptrace/version.rb'
 
 begin
-  Bundler.setup(:development, :doc)
-rescue Bundler::BundlerError => e
+  gem 'ore-tasks', '~> 0.4'
+  require 'ore/tasks'
+
+  Ore::Tasks.new
+rescue LoadError => e
   STDERR.puts e.message
-  STDERR.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
+  STDERR.puts "Run `gem install ore-tasks` to install 'ore/tasks'."
 end
 
-Jeweler::Tasks.new do |gem|
-  gem.name = 'ffi-ptrace'
-  gem.version = FFI::PTrace::VERSION
-  gem.summary = %Q{Ruby FFI bindings for Linux ptrace.}
-  gem.description = %Q{Ruby FFI bindings for Linux ptrace.}
-  gem.email = 'postmodern.mod3@gmail.com'
-  gem.homepage = 'http://github.com/sophsec/ffi-ptrace'
-  gem.authors = ['Postmodern']
-  gem.has_rdoc = 'yard'
-end
+begin
+  gem 'rspec', '~> 2.4'
+  require 'rspec/core/rake_task'
 
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |spec|
-  spec.libs += ['lib', 'spec']
-  spec.spec_files = FileList['spec/**/*_spec.rb']
-  spec.spec_opts = ['--options', '.specopts']
+  RSpec::Core::RakeTask.new
+rescue LoadError => e
+  task :spec do
+    abort "Please run `gem install rspec` to install RSpec."
+  end
 end
-
+task :test => :spec
 task :default => :spec
 
-require 'yard'
-YARD::Rake::YardocTask.new
+begin
+  gem 'yard', '~> 0.6.0'
+  require 'yard'
+
+  YARD::Rake::YardocTask.new  
+rescue LoadError => e
+  task :yard do
+    abort "Please run `gem install yard` to install YARD."
+  end
+end
