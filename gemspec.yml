@@ -1,0 +1,15 @@
+name: ffi-ptrace
+summary: Ruby FFI bindings for Linux ptrace.
+description: Ruby FFI bindings for Linux ptrace.
+email: postmodern.mod3@gmail.com
+homepage: http://github.com/sophsec/ffi-ptrace
+authors: Postmodern
+has_rdoc: yard
+
+dependencies:
+  ffi: ~> 1.0
+
+development_dependencies:
+  ore-tasks: ~> 0.4
+  rspec: ~> 2.4
+  yard: ~> 0.7.0
