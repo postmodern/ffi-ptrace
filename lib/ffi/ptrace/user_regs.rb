@@ -1,6 +1,6 @@
-require 'ptrace/user_regs_32'
-require 'ptrace/user_regs_64'
-require 'ptrace/types'
+require 'ffi/ptrace/user_regs_32'
+require 'ffi/ptrace/user_regs_64'
+require 'ffi/ptrace/types'
 
 require 'ffi'
 

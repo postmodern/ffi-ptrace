@@ -1,7 +1,7 @@
-require 'ptrace/memory_space'
-require 'ptrace/user_regs'
-require 'ptrace/user_fpregs'
-require 'ptrace/ptrace'
+require 'ffi/ptrace/memory_space'
+require 'ffi/ptrace/user_regs'
+require 'ffi/ptrace/user_fpregs'
+require 'ffi/ptrace/ptrace'
 
 module FFI
   module PTrace

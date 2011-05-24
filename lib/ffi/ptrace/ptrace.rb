@@ -1,4 +1,4 @@
-require 'ptrace/types'
+require 'ffi/ptrace/types'
 
 require 'ffi'
 

@@ -1,6 +1,6 @@
-require 'ptrace/user_fpregs_32'
-require 'ptrace/user_fpregs_64'
-require 'ptrace/types'
+require 'ffi/ptrace/user_fpregs_32'
+require 'ffi/ptrace/user_fpregs_64'
+require 'ffi/ptrace/types'
 
 require 'ffi'
 

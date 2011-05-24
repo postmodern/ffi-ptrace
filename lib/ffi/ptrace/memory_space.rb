@@ -1,6 +1,6 @@
-require 'ptrace/types'
-require 'ptrace/process'
-require 'ptrace/memory_range'
+require 'ffi/ptrace/types'
+require 'ffi/ptrace/process'
+require 'ffi/ptrace/memory_range'
 
 module FFI
   module PTrace
