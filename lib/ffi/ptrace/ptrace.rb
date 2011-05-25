@@ -35,7 +35,7 @@ module FFI
       :ptrace_setsiginfo, 0x4203
     ]
 
-    OPTIONS = enum [
+    enum :ptrace_options, [
       :ptrace_option_trace_sysgood, 0x01,
       :ptrace_option_trace_fork, 0x02,
       :ptrace_option_trace_vfork, 0x04,
@@ -46,7 +46,7 @@ module FFI
       :ptrace_option_mask, 0x7f
     ]
 
-    EVENTS = enum [
+    enum :ptrace_eventcodes, [
       :ptrace_event_fork, 1,
       :ptrace_event_vfork, 2,
       :ptrace_event_clone, 3,
