@@ -67,17 +67,39 @@ module FFI
     end
 
     #
-    # @see Process.fork
+    # Forks a new traceable Ruby process.
     #
-    def PTrace.fork(&block)
-      Process.fork(&block)
+    # @yield []
+    #   The given block will called after the process has become
+    #   traceable.
+    #
+    # @return [Process]
+    #   The process object.
+    #
+    def PTrace.fork
+      ret = Kernel.fork do
+        PTrace.allow!
+
+        yield
+      end
+
+      return Process.new(ret) if ret
     end
 
     #
-    # @see Process.exec
+    # Executes a new traceable process.
+    #
+    # @param [String] program
+    #   The program to run within the forked process.
+    #
+    # @param [Array<String>] arguments
+    #   The arguments to run the program with.
+    #
+    # @return [Process]
+    #   The process object.
     #
     def PTrace.exec(program,*arguments)
-      Process.exec(program,*arguments)
+      PTrace.fork { exec(program,*arguments) }
     end
   end
 end
