@@ -6,6 +6,12 @@ module FFI
 
     WORD_SIZE = (FFI::Platform::ADDRESS_SIZE / 8)
 
+    ENDIANNESS = if (FFI::Platform::LITTLE_ENDIAN == 1234)
+                   :little
+                 else
+                   :big
+                 end
+
     if WORD_SIZE == 8
       REGS = enum [
         :r15,
