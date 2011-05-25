@@ -82,7 +82,7 @@ module FFI
       ret = Kernel.fork do
         PTrace.allow!
 
-        exec(program,*arguments)
+        Kernel.exec(program,*arguments)
       end
 
       return Process.new(ret) if ret
