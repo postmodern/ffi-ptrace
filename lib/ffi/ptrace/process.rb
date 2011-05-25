@@ -52,26 +52,80 @@ module FFI
         return Process.new(ret) if ret
       end
 
+      #
+      # Retrieves a word at the address, in the `.text` section.
+      #
+      # @param [Integer] addr
+      #   The address to peek at.
+      #
+      # @return [Integer]
+      #   The word at the given address.
+      #
       def peek_text(addr)
         ptrace(:ptrace_peektext,addr,nil)
       end
 
+      #
+      # Retrieves a word at the address, in the `.data` section.
+      #
+      # @param [Integer] addr
+      #   The address to peek at.
+      #
+      # @return [Integer]
+      #   The word at the given address.
+      #
       def peek_data(addr)
         ptrace(:ptrace_peekdata,addr,nil)
       end
 
+      #
+      # Retrieves a word at the address, in user memory.
+      #
+      # @param [Integer] addr
+      #   The address to peek at.
+      #
+      # @return [Integer]
+      #   The word at the given address.
+      #
       def peek_user(offset)
         ptrace(:ptrace_peekuser,offset,nil)
       end
 
+      #
+      # Sets the data at the given address, in the `.text` section.
+      #
+      # @param [Integer] addr
+      #   The address to poke at.
+      #
+      # @param [Integer] data
+      #   The data to set.
+      #
       def poke_text(addr,data)
         ptrace(:ptrace_poketext,addr,data)
       end
 
+      #
+      # Sets the data at the given address, in the `.data` section.
+      #
+      # @param [Integer] addr
+      #   The address to poke at.
+      #
+      # @param [Integer] data
+      #   The data to set.
+      #
       def poke_data(addr,data)
         ptrace(:ptrace_pokedata,addr,data)
       end
 
+      #
+      # Sets the data at the given address, in user memory.
+      #
+      # @param [Integer] addr
+      #   The address to poke at.
+      #
+      # @param [Integer] data
+      #   The data to set.
+      #
       def poke_user(offset,data)
         ptrace(:ptrace_pokeuser,offset,data)
       end
@@ -165,10 +219,18 @@ module FFI
         ptrace(:ptrace_detach)
       end
 
+      #
+      # @note
+      #  Not implemented.
+      #
       def fpx_regs
         raise(RuntimeError,"#{self.class}#fpx_regs not implemented",caller)
       end
 
+      #
+      # @note
+      #  Not implemented.
+      #
       def fpx_regs=(new_regs)
         raise(RuntimeError,"#{self.class}#fpx_regs= not implemented",caller)
       end
@@ -190,14 +252,26 @@ module FFI
         ptrace(:ptrace_setoptions,nil,new_options)
       end
 
+      #
+      # @note
+      #  Not implemented.
+      #
       def event_mesg
         raise(RuntimeError,"#{self.class}#event_mesg not implemented",caller)
       end
 
+      #
+      # @note
+      #  Not implemented.
+      #
       def signal_info
         raise(RuntimeError,"#{self.class}#signal_info not implemented",caller)
       end
 
+      #
+      # @note
+      #  Not implemented.
+      #
       def signal_info=(new_info)
         raise(RuntimeError,"#{self.class}#signal_info= not implemented",caller)
       end
