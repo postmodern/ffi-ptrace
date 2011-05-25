@@ -68,10 +68,12 @@ module FFI
       # @yieldparam [Integer] word
       #   A word read from the memory range.
       #
-      # @return [MemoryRange]
-      #   The memory range.
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator will be returned.
       #
       def each
+        return enum_for unless block_given?
+
         (@lower..@upper).step(WORD_SIZE).each do |addr|
           yield @memory[addr]
         end
