@@ -41,7 +41,7 @@ module FFI
       #   The process object.
       #
       def Process.fork
-        ret = fork do
+        ret = Kernel.fork do
           PTrace.allow!
           yield
         end
