@@ -46,7 +46,7 @@ module FFI
           yield
         end
 
-        return Process.new(ret) if ret
+        return new(ret) if ret
       end
 
       #
@@ -62,7 +62,7 @@ module FFI
       #   The process object.
       #
       def Process.exec(program,*arguments)
-        Process.fork { exec(program,*arguments) }
+        Process.fork { Kernel.exec(program,*arguments) }
       end
 
       #
