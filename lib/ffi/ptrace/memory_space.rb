@@ -42,7 +42,7 @@ module FFI
         if addr.kind_of?(Range)
           MemoryRange.new(self,addr.begin,addr.end)
         elsif length > 1
-          MemoryRange.new(self,addr,addr + (WORD_SIZE * index))
+          MemoryRange.new(self,addr,addr + (WORD_SIZE * length))
         else
           @process.send(@read_method,addr)
         end
