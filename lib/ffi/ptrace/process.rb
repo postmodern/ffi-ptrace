@@ -25,9 +25,9 @@ module FFI
       def initialize(pid)
         @pid = pid
 
-        @text = MemorySpace.new(self)
-        @data = MemorySpace.new(self)
-        @user = MemorySpace.new(self)
+        @text = MemorySpace.new(self,:peek_text,:poke_text)
+        @data = MemorySpace.new(self,:peek_data,:poke_data)
+        @user = MemorySpace.new(self,:peek_user,:poke_user)
       end
 
       #
