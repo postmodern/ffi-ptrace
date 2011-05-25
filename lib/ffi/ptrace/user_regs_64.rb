@@ -57,5 +57,6 @@ module FFI
       def ds; self[:ds]; end
       def es; self[:es]; end
       def gs; self[:gs]; end
+    end
   end
 end
