@@ -16,6 +16,17 @@ module FFI
                  :padding, [:uint32, 24]
         end
       end
+
+      def cwd; self[:cwd]; end
+      def swd; self[:swd]; end
+      def ftw; self[:ftw]; end
+      def fop; self[:fop]; end
+      def rip; self[:rip]; end
+      def rdp; self[:rdp]; end
+      def mxcsr; self[:mxcsr]; end
+      def mxcr_mask; self[:mxcr_mask]; end
+      def st_space; self[:st_space]; end
+      def xmm_space; self[:xmm_space]; end
     end
   end
 end
