@@ -66,8 +66,5 @@ module FFI
 
     # I/O error
     EIO = 5
-
-    typedef :int, :pid_t
-
   end
 end
