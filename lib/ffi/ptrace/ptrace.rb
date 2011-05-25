@@ -7,7 +7,7 @@ module FFI
   module PTrace
     extend FFI::Library
 
-    ffi_lib 'c'
+    ffi_lib [FFI::CURRENT_PROCESS, 'c']
 
     enum :ptrace_request, [
       :ptrace_traceme, 0,
