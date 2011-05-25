@@ -40,7 +40,7 @@ module FFI
       #   The word at the given address.
       #
       def peek_text(addr)
-        ptrace(:ptrace_peektext,addr,nil)
+        ptrace(:ptrace_peektext,FFI::Pointer.new(addr),nil)
       end
 
       #
@@ -53,7 +53,7 @@ module FFI
       #   The word at the given address.
       #
       def peek_data(addr)
-        ptrace(:ptrace_peekdata,addr,nil)
+        ptrace(:ptrace_peekdata,FFI::Pointer.new(addr),nil)
       end
 
       #
@@ -66,7 +66,7 @@ module FFI
       #   The word at the given address.
       #
       def peek_user(offset)
-        ptrace(:ptrace_peekuser,offset,nil)
+        ptrace(:ptrace_peekuser,FFI::Pointer.new(offset),nil)
       end
 
       #
@@ -79,7 +79,7 @@ module FFI
       #   The data to set.
       #
       def poke_text(addr,data)
-        ptrace(:ptrace_poketext,addr,data)
+        ptrace(:ptrace_poketext,FFI::Pointer.new(addr),data)
       end
 
       #
@@ -92,7 +92,7 @@ module FFI
       #   The data to set.
       #
       def poke_data(addr,data)
-        ptrace(:ptrace_pokedata,addr,data)
+        ptrace(:ptrace_pokedata,FFI::Pointer.new(addr),data)
       end
 
       #
@@ -105,7 +105,7 @@ module FFI
       #   The data to set.
       #
       def poke_user(offset,data)
-        ptrace(:ptrace_pokeuser,offset,data)
+        ptrace(:ptrace_pokeuser,FFI::Pointer.new(offset),data)
       end
 
       #
