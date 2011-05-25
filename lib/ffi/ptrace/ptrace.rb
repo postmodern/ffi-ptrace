@@ -1,4 +1,5 @@
 require 'ffi/ptrace/types'
+require 'ffi/ptrace/process'
 
 require 'ffi'
 
@@ -63,6 +64,20 @@ module FFI
     #
     def PTrace.allow!
       PTrace.ptrace(:ptrace_traceme, 0, nil, nil)
+    end
+
+    #
+    # @see Process.fork
+    #
+    def PTrace.fork(&block)
+      Process.fork(&block)
+    end
+
+    #
+    # @see Process.exec
+    #
+    def PTrace.exec(program,*arguments)
+      Process.exec(program,*arguments)
     end
   end
 end
