@@ -34,17 +34,15 @@ module FFI
       #   The number of words to read.
       #
       # @return [MemoryRange, Array<Integer>, Integer]
-      #   If the address was a `Range` then a MemoryRange object will be returned.
-      #   If a length was given, an Array of words will be returned.
+      #   If the address was a `Range` then a {MemoryRange} object will be returned.
+      #   If a length was given, a {MemoryRange} will be returned.
       #   If the address was an Integer, a single word will be returned.
       #
       def [](addr,length=1)
         if addr.kind_of?(Range)
           MemoryRange.new(self,addr.begin,addr.end)
         elsif length > 1
-          (0..length).step(WORD_SIZE).map do |index|
-            @process.send(@read_method,addr + index)
-          end
+          MemoryRange.new(self,addr,addr + (WORD_SIZE * index))
         else
           @process.send(@read_method,addr)
         end
