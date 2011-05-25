@@ -287,7 +287,7 @@ module FFI
         when PTrace::EPERM
           raise(Errno::EACCESS,"The requested process (#{@pid}) couldn't be traced. Permission denied",caller)
         when PTrace::ESRCH
-          raise(RuntimeError,"The requested process (#{@pid}) doesn't exist or is being traced",caller)
+          raise(RuntimeError,"The requested process (#{@pid}) doesn't exist, not being traced or not stopped",caller)
         when PTrace::EIO
           raise(IOError,"The ptrace request was invalid or read/write was made from/to invalid area of memory",caller)
         end
