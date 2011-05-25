@@ -51,28 +51,29 @@ module FFI
       #
       # Writes data to the memory of a process.
       #
-      # @param [Range, Integer] addr
-      #   The address(es) to write data to.
+      # @param [Integer] addr
+      #   The base address to begin writing at.
       #
-      # @param [Range, Array<Integer>, Integer] data
+      # @param [Array<Integer>, String, Integer] data
       #   The data to write.
       #
-      # @return [Range, Array<Integer>, Integer]
+      # @return [Array<Integer>, String, Integer]
       #   The written data.
       #
       def []=(addr,data)
-        if addr.kind_of?(Range)
-          if (data.kind_of?(Array) || data.kind_of?(Range))
-            data.each_with_index do |element,index|
-              @process.send(@write_method,addr.begin + (index * WORD_SIZE),element)
-            end
-          else
-            addr.step(WORD_SIZE).each do |index|
-              @process.send(@write_method,index,data)
-            end
+        case data
+        when Array
+          data.each_with_index do |element,index|
+            @process.send(@write_method,addr + (index * WORD_SIZE),element)
           end
-        else
+        when String
+          data.each_byte.each_with_index do |byte,index|
+            @process.send(@write_method,addr + index,byte)
+          end
+        when Integer
           @process.send(@write_method,addr,data)
+        else
+          raise("data must be an Array, String or Integer")
         end
 
         return data
