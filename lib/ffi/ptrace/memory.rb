@@ -52,19 +52,28 @@ module FFI
       # @param [Integer] address
       #   The base address to begin writing at.
       #
-      # @param [Array<Integer>, Integer] value
+      # @param [String, Float, Integer] value
       #   The value to write.
       #
       def []=(address,value)
         case value
-        when Array
-          value.each_with_index do |element,index|
-            put_word(address + (index * WORD_SIZE),element)
-          end
+        when String
+          self[address,value.length].put_bytes(0,value)
+        when Float
         when Integer
+          if (value >= 0 && value <= 0xff)
+            put_uint8(address,value)
+          elsif (value >= 0x100 && value <= 0xffff)
+            put_uint16(address,value)
+          elsif (value >= 0x10000 && value <= 0xffffffff)
+            put_uint32(address,value)
+          elsif (value >= 0x100000000 && value <= 0xffffffffffffffff)
+            put_uint64(address,value)
+          end
+
           put_word(address,value)
         else
-          raise(TypeError,"value must be an Array or Integer")
+          raise(TypeError,"value must be a String, Float or Integer")
         end
 
         return value
