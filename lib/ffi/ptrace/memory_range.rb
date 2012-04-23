@@ -2,83 +2,140 @@ require 'ffi/ptrace/types'
 
 module FFI
   module PTrace
-    class MemoryRange
+    class MemoryRange < FFI::Buffer
 
-      include Enumerable
+      PAGE_SIZE = 4096
 
-      #
-      # Creates an `Enumerable` memory range.
-      #
-      # @param [MemorySpace] memory
-      #   The memory space that the range covers.
-      #
-      # @param [Integer] lower
-      #   The lower bound address of the range.
-      #
-      # @param [Integer] upper
-      #   The upper bound address of the range.
-      #
-      def initialize(memory,lower,upper)
-        @memory = memory
-        @lower = lower
-        @upper = upper
+      # The memory that the range came from.
+      attr_reader :memory
+
+      # Address the memory starts at.
+      attr_reader :address
+
+      # The length of the memory.
+      attr_reader :length
+
+      def initialize(memory,address,size)
+        @memory    = memory
+        @address   = address.to_i
+        @length    = size
+        @remainder = if size < WORD_SIZE
+                       WORD_SIZE - size
+                     else
+                       size % WORD_SIZE
+                     end
+
+        super(@length + @remainder)
+
+        load()
       end
 
-      #
-      # Reads data from the memory range.
-      #
-      # @param [Range<Integer>, Integer] addr
-      #   The address(es) to read from.
-      #
-      # @return [MemoryRange, Integer]
-      #   If the given address was a Range, then a new {MemoryRange} will be returned.
-      #   If the given address was an Integer, then the word at the given address will be read.
-      #
-      def [](index,length=1)
-        if index.kind_of?(Range)
-          base = @lower + index.begin
-
-          @memory[Range.new(base,base+index.end)]
-        elsif length > 1
-          @memory[@lower + index, length]
-        else
-          @memory[@lower + index]
-        end
-      end
-
-      #
-      # Writes data to the memory range.
-      #
-      # @param [Integer] addr
-      #   The address(es) to write to.
-      #
-      # @param [Array<Integer>, String, Integer] data
-      #   The data to write.
-      #
-      def []=(addr,data)
-        @memory[addr] = data
-      end
-
-      #
-      # Enumerates over the words within the memory range.
-      #
-      # @yield [word]
-      #   The given block will be passed each word in the memory range.
-      #
-      # @yieldparam [Integer] word
-      #   A word read from the memory range.
-      #
-      # @return [Enumerator]
-      #   If no block is given, an Enumerator will be returned.
-      #
-      def each
-        return enum_for unless block_given?
-
-        (@lower..@upper).step(WORD_SIZE).each do |addr|
-          yield @memory[addr]
+      def load(range=(0..@length))
+        align(range).step(WORD_SIZE) do |offset|
+          put_ulong(offset,@memory.get_word(@address + offset))
         end
 
         return self
+      end
+
+      alias reload load
+
+      def save(range=(0..@length))
+        align(range).step(WORD_SIZE) do |offset|
+          @memory.put_ulong(@address + offset,get_uint(offset))
+        end
+
+        return self
+      end
+
+      def get_bytes(offset=0,count=@length)
+        super(offset,count)
+      end
+
+      def get_string(offset=0)
+        super(offset)
+      end
+
+      def get_array_of_char(offset=0,count=@length)
+        super(offset,count)
+      end
+
+      def get_array_of_int(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:int)))
+      end
+
+      def get_array_of_int8(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:int8)))
+      end
+
+      def get_array_of_int16(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:int16)))
+      end
+
+      def get_array_of_int32(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:int32)))
+      end
+
+      def get_array_of_int64(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:int64)))
+      end
+
+      def get_array_of_float(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:float)))
+      end
+
+      def get_array_of_float32(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:float32)))
+      end
+
+      def get_array_of_float64(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:float64)))
+      end
+
+      def get_array_of_double(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:double)))
+      end
+
+      def get_array_of_uchar(offset=0,count=@length)
+        super(offset,count)
+      end
+
+      def get_array_of_uint(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:uint)))
+      end
+
+      def get_array_of_uint8(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:uint8)))
+      end
+
+      def get_array_of_uint16(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:uint16)))
+      end
+
+      def get_array_of_uint32(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:uint32)))
+      end
+
+      def get_array_of_uint64(offset=0,count=nil)
+        super(offset,count || (@length / FFI.type_size(:uint64)))
+      end
+
+      protected
+
+      #
+      # Aligns a memory range on {WORD_SIZE} boundries.
+      #
+      # @param [Range] range
+      #   The memory range to align.
+      #
+      # @return [Range]
+      #   A memory range aligned on {WORD_SIZE} boundries.
+      #
+      def align(range)
+        start = range.begin - (range.begin % WORD_SIZE)
+        stop  = range.end   + ((size - range.end) % WORD_SIZE)
+
+        return (start...stop)
       end
 
     end

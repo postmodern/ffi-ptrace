@@ -1,4 +1,6 @@
-require 'ffi/ptrace/memory_space'
+require 'ffi/ptrace/text'
+require 'ffi/ptrace/data'
+require 'ffi/ptrace/user'
 require 'ffi/ptrace/user_regs'
 require 'ffi/ptrace/user_fpregs'
 require 'ffi/ptrace/ptrace'
@@ -6,6 +8,9 @@ require 'ffi/ptrace/ptrace'
 module FFI
   module PTrace
     class Process
+
+      # The PID of the process
+      attr_reader :pid
 
       # The `text` memory space
       attr_reader :text
@@ -25,9 +30,9 @@ module FFI
       def initialize(pid)
         @pid = pid
 
-        @text = MemorySpace.new(self,:peek_text,:poke_text)
-        @data = MemorySpace.new(self,:peek_data,:poke_data)
-        @user = MemorySpace.new(self,:peek_user,:poke_user)
+        @text = Text.new(self)
+        @data = Data.new(self)
+        @user = User.new(self)
       end
 
       #
