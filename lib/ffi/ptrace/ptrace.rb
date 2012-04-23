@@ -16,8 +16,8 @@ module FFI
     #
     # Makes the current process traceable by `ptrace`.
     #
-    def PTrace.allow!
-      PTrace.ptrace(:ptrace_traceme, 0, nil, nil)
+    def self.allow!
+      ptrace(:ptrace_traceme, 0, nil, nil)
     end
 
     #
@@ -32,9 +32,9 @@ module FFI
     # @return [Process]
     #   The process object.
     #
-    def PTrace.exec(program,*arguments)
+    def self.exec(program,*arguments)
       ret = Kernel.fork do
-        PTrace.allow!
+        allow!
 
         Kernel.exec(program,*arguments)
       end
