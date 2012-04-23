@@ -278,19 +278,19 @@ module FFI
       end
 
       def get_array_of_uint16(address,length)
-        self[address, FFI.type_size(:uint16) * length].get_array_of_uint16
+        self[address, length * FFI.type_size(:uint16)].get_array_of_uint16
       end
 
       alias get_array_of_ushort get_array_of_uint16
 
       def get_array_of_uint32(address,length)
-        self[address, FFI.type_size(:uint32) * length].get_array_of_uint32
+        self[address, length * FFI.type_size(:uint32)].get_array_of_uint32
       end
 
       alias get_array_of_ulong get_array_of_uint32
 
       def get_array_of_uint64(address,length)
-        self[address, FFI.type_size(:uint64) * length].get_array_of_uint64
+        self[address, length * FFI.type_size(:uint64)].get_array_of_uint64
       end
 
       alias get_array_of_ulong_long get_array_of_uint64
