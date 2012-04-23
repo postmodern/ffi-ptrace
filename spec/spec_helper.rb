@@ -11,6 +11,6 @@ PROGRAM_SOURCE = File.join('spec','program.c')
 
 RSpec.configure do |spec|
   spec.before(:suite) do
-    system CC, '-m32', PROGRAM_SOURCE, '-o', PROGRAM
+    system CC, PROGRAM_SOURCE, '-o', PROGRAM
   end
 end
