@@ -6,3 +6,4 @@ tmp/*
 .yardoc
 *.swp
 *~
+spec/program
