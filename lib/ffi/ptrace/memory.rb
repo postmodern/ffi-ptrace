@@ -31,10 +31,11 @@ module FFI
       # @param [Integer] length
       #   The number of words to read.
       #
-      # @return [MemoryRange, Array<Integer>, Integer]
-      #   If the address was a `Range` then a {MemoryRange} object will be returned.
-      #   If a length was given, a {MemoryRange} will be returned.
-      #   If the address was an Integer, a single word will be returned.
+      # @return [MemoryRange, Integer]
+      #   * If the address was a `Range` then a {MemoryRange} object will be
+      #     returned.
+      #   * If a length was given, a {MemoryRange} will be returned.
+      #   * If the address was an Integer, a single word will be returned.
       #
       def [](address,length=nil)
         if address.kind_of?(Range)
