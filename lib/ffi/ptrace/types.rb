@@ -4,6 +4,7 @@ module FFI
   module PTrace
     extend FFI::Library
 
+    # The native word-size
     WORD_SIZE = (FFI::Platform::ADDRESS_SIZE / 8)
 
     # Operation not permitted
