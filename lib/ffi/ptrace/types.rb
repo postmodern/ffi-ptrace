@@ -6,12 +6,6 @@ module FFI
 
     WORD_SIZE = (FFI::Platform::ADDRESS_SIZE / 8)
 
-    ENDIANNESS = if (FFI::Platform::LITTLE_ENDIAN == 1234)
-                   :little
-                 else
-                   :big
-                 end
-
     # Operation not permitted
     EPERM = 1
 
