@@ -4,6 +4,6 @@ require 'spec_helper'
 
 describe PTrace do
   it "should have a VERSION constant" do
-    described_class.const_defined?('VERSION').should == true
+    expect(described_class.const_defined?('VERSION')).to be(true)
   end
 end
