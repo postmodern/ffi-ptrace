@@ -1,10 +1,10 @@
-doc
-pkg
-tmp/*
+/doc
+/pkg
 .DS_Store
 .bundle
 .yardoc
 *.swp
 *~
 core.*
-spec/program
+/Gemfile.lock
+/spec/program
