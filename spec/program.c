@@ -1,5 +1,7 @@
-#include <stdio.h>
 #include <stdint.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
 
 int integer = -1;
 
@@ -112,11 +114,14 @@ int main(int argc,const char *argv[])
 		}
 		return 0;
 	}
-
-	while (1)
+	else
 	{
-  		say();
-		sleep(2);
+		while (1)
+		{
+			say();
+			sleep(2);
+		}
 	}
+
 	return 0;
 }
